@@ -1,0 +1,11 @@
+H|Customer_Name|CustomerID|CustomerOpenDate|LastConsultedDate|VaccinationType|Doctor|State|Country|PostCode|DateofBirth|ActiveCustomer
+D|Yael|1|20101012|20121013|sput5|Piper Sheppard|Lange|Peru|75532|06031987|A
+D|Xaviera|2|20101112|20210329|sput5|Savannah Keith|Sint|Peru|3604|26011999|A
+D|Matthew|3|20100323|20160202|sput5|Justin Leblanc|Marlb|Peru|18518|17121996|A
+D|Alec|4|20210101|20220305|sput5|Colin Hodge|Eindh|Nepal|19167|15031966|A
+D|Ethan|5|20200505|20210814|sput5|Charlotte Campbell|Keumi|Nepal|Z4730|27061959|A
+D|Macey|6|20150518|20190808|mvd|Garrison Mosley|Salci|Peru|87049|17081971|A
+D|Angelica|7|20171214|20171214|covix|TaShya Mendez|Perth|india|61188|11082000|A
+D|April|8|20190126|20201231|covix|Amal Gray|Burin|India|96896|24071999|A
+D|Nissim|9|20181130|20181201|mvd|Chelsea Farmer|Masca|Nepal|09666|03101928|A
+T|9|
