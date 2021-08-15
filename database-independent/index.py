@@ -4,7 +4,7 @@ from sqlalchemy import create_engine, inspect
 from createTable import createTables
 
 
-df = pd.read_csv('data/Customers_20210813185020.txt', sep="|", header=None)
+df = pd.read_csv('../data/Customers_20210813185020.txt', sep="|", header=None)
 
 # header may or may not exist, so using `skiprows = 1` is not good idea
 is_header = df.iloc[0, 0]
@@ -75,8 +75,6 @@ inspector = inspect(engine)
 # creating tables that does not exists in distinct_countries
 createTables(engine, inspector, db, distinct_countries)
 
-# df[my_filt].to_sql(name='india', con=my_eng, if_exists='replace', index=False)
-
 # inserting records as per country
 for country in distinct_countries:
     my_filt = (df['country'] == country)
@@ -86,5 +84,3 @@ for country in distinct_countries:
         print("Inserted")
     except Exception as e:
         print(e)
-
-# df['country'] == "india"
