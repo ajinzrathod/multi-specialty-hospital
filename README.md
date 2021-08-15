@@ -4,7 +4,7 @@ I own a multi-specialty hospital chain with locations all across the world. My h
 vaccinations. Patients who come to my hospital (across the globe) will be given a user card with
 which they can access any of my hospitals in any location.
 
-## Why we wanted to solve this issue?
+## The Problem
 
 We maintain all customers in one database. There are heaps of customers who have user cards. So, I
 decided to split up the customers based on the country and load them into corresponding country
@@ -48,7 +48,7 @@ T|9|
 
 **Output:**
 
-And any script or program which reads the data from files which will load the data into tables, one table per country.
+Any script or program which reads the data from files which will load the data into tables, one table per country.
 
 ## How to use it?
 
@@ -91,9 +91,9 @@ And any script or program which reads the data from files which will load the da
 
 There are 2 folders:
 1. **Database-independent**
-  * Scripts in this folder will create Tables in *Any* Database. You just have to change the connection string which is also  given below:
+  * Scripts in this folder will create Tables in **Any Database**. You just have to change the connection string which is also  given below:
 2. **For-mysql**
-  * Script is this folder is solely made for **MySql** as it was asked in question to make. **Create table queries**. So we have created a procedure named `createCountryTable` inside `create-table-stored-procedure.sql` file which can also be found in same directory. 
+  * Script is this folder is solely made for **MySql** as it was asked in question to make "**Create table queries**". So we have created a procedure named `createCountryTable` inside `create-table-stored-procedure.sql` file which can also be found in same directory. 
     
     **Connection String:**
     ```
@@ -127,3 +127,5 @@ There are 2 folders:
 
 ## Other Details
 **Python Version:** 3.8.10
+
+**NOTE**: We could remove `country` column from each country table. But considering a scenario when we want to merge all the data in one table. This would be a easy approach.
