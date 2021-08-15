@@ -18,8 +18,7 @@ df.columns = ["D",
               "customerOpenDate", "lastConsultedDate",
               "vaccinationType", "doctorConsulted",
               "state", "country", "postCode",
-              "dateofBirth", "activeCustomer"
-             ]
+              "dateofBirth", "activeCustomer"]
 
 # Checking if Trailer record exists
 if is_trailer == 'T':
@@ -34,4 +33,17 @@ df['customerID'] = df['customerID'].apply(np.int64)
 # Setting customerID as index for faster operations
 df.set_index('customerID')
 
+# here date is treated as string
+print(df.info(), end="\n\n")
+
+# Converting String to Dates
+try:
+    df['customerOpenDate'] = pd.to_datetime(df['customerOpenDate'], format='%Y%m%d')
+    df['lastConsultedDate'] = pd.to_datetime(df['lastConsultedDate'], format='%Y%m%d')
+    df['dateofBirth'] = pd.to_datetime(df['dateofBirth'], format='%d%m%Y')
+except Exception as e:
+    print(e)
+
+# here date is treated as date
+print(df.info(), end="\n\n")
 print(df)
