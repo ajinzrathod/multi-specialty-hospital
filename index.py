@@ -47,3 +47,12 @@ except Exception as e:
 # here date is treated as date
 print(df.info(), end="\n\n")
 print(df)
+
+
+# lower is applied here and not in `distinct_countries` coz we need to fetch rows also
+df['country'] = df['country'].str.lower()
+
+# Getting Distinct Countries
+distinct_countries = df['country'].drop_duplicates()
+
+print("\nDistinct Countries:\n", distinct_countries)
