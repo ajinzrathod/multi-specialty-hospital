@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sqlalchemy import create_engine, inspect
 
 
 df = pd.read_csv('data/Customers_20210813185020.txt', sep="|", header=None)
@@ -56,3 +57,31 @@ df['country'] = df['country'].str.lower()
 distinct_countries = df['country'].drop_duplicates()
 
 print("\nDistinct Countries:\n", distinct_countries)
+
+# Connecting to Database
+print()
+db = "incubyte"
+try:
+    my_eng = create_engine("mysql+mysqlconnector://root:password@localhost/" + db)
+    my_eng.connect()
+    print("Database Connected")
+except Exception as e:
+    print(e)
+
+# Performing database inspection
+inspector = inspect(my_eng)
+
+# Loading all schemas
+schemas = inspector.get_schema_names()
+
+# Printing all schemas
+for schema in schemas:
+    print("schema: %s" % schema)
+
+for table_name in inspector.get_table_names(schema=db):
+    print()
+    print(table_name)
+
+    # printing all coulmns
+    for column in inspector.get_columns(table_name, schema=db):
+        print("Column: %s" % column)
