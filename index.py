@@ -71,17 +71,5 @@ except Exception as e:
 # Performing database inspection
 inspector = inspect(my_eng)
 
-# Loading all schemas
-schemas = inspector.get_schema_names()
-
-# Printing all schemas
-for schema in schemas:
-    print("schema: %s" % schema)
-
-for table_name in inspector.get_table_names(schema=db):
-    print()
-    print(table_name)
-
-    # printing all coulmns
-    for column in inspector.get_columns(table_name, schema=db):
-        print("Column: %s" % column)
+existing_tables = [tbl for tbl in inspector.get_table_names(schema=db)]
+print(existing_tables)
