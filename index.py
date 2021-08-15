@@ -74,3 +74,17 @@ inspector = inspect(engine)
 
 # creating tables that does not exists in distinct_countries
 createTables(engine, inspector, db, distinct_countries)
+
+# df[my_filt].to_sql(name='india', con=my_eng, if_exists='replace', index=False)
+
+# inserting records as per country
+for country in distinct_countries:
+    my_filt = (df['country'] == country)
+    try:
+        print("Inserting Records in " + country)
+        df[my_filt].to_sql(name=country, con=engine, if_exists='replace', index=False)
+        print("Inserted")
+    except Exception as e:
+        print(e)
+
+# df['country'] == "india"
