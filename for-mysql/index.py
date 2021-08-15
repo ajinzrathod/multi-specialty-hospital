@@ -4,6 +4,19 @@ from sqlalchemy import create_engine, inspect
 from createTable import createTables
 
 
+def getTables(engine):
+    # If inspector is Not called again,
+    # it will not refresh the tables from database, thus using function
+
+    # Performing database inspection
+    inspector = inspect(engine)
+
+    # Getting list of tables from "incubyte" database
+    all_tables = [tbl for tbl in inspector.get_table_names(schema=db)]
+
+    return all_tables, inspector
+
+
 df = pd.read_csv('../data/Customers_20210813185020.txt', sep="|", header=None)
 
 # header may or may not exist, so using `skiprows = 1` is not good idea
@@ -69,18 +82,28 @@ try:
 except Exception as e:
     print(e)
 
-# Performing database inspection
-inspector = inspect(engine)
+# Getting inspector and list of tables from "incubyte" database
+existing_tables, inspector = getTables(engine)
+print("Existing Tables:", existing_tables)
 
 # creating tables that does not exists in distinct_countries
-createTables(engine, inspector, db, distinct_countries)
+createTables(engine, inspector, db, distinct_countries, existing_tables)
+
+# Getting inspector and list of tables from "incubyte" database
+existing_tables, inspector = getTables(engine)
+print("Existing Tables:", existing_tables)
 
 # inserting records as per country
 for country in distinct_countries:
     my_filt = (df['country'] == country)
     try:
         print("Inserting Records in " + country)
-        df[my_filt].to_sql(name=country, con=engine, if_exists='replace', index=False)
-        print("Inserted")
+
+        # this will create table if table does not exists, which wil avoid constraints like pk
+        if country in existing_tables:
+            df[my_filt].to_sql(name=country, con=engine, if_exists='replace', index=False)
+            print("Inserted")
+        else:
+            print(country + " table does Not exists")
     except Exception as e:
         print(e)
