@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 df = pd.read_csv('data/Customers_20210813185020.txt', sep="|", header=None)
@@ -26,5 +27,11 @@ if is_trailer == 'T':
 
 # Dropping D columns as it of no use
 del df['D']
+
+# customerID is considered as float by pandas, so casting to int
+df['customerID'] = df['customerID'].apply(np.int64)
+
+# Setting customerID as index for faster operations
+df.set_index('customerID')
 
 print(df)
