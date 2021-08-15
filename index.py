@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine, inspect
+from createTable import createTables
 
 
 df = pd.read_csv('data/Customers_20210813185020.txt', sep="|", header=None)
@@ -62,14 +63,14 @@ print("\nDistinct Countries:\n", distinct_countries)
 print()
 db = "incubyte"
 try:
-    my_eng = create_engine("mysql+mysqlconnector://root:password@localhost/" + db)
-    my_eng.connect()
+    engine = create_engine("mysql+mysqlconnector://root:password@localhost/" + db)
+    engine.connect()
     print("Database Connected")
 except Exception as e:
     print(e)
 
 # Performing database inspection
-inspector = inspect(my_eng)
+inspector = inspect(engine)
 
-existing_tables = [tbl for tbl in inspector.get_table_names(schema=db)]
-print(existing_tables)
+# creating tables that does not exists in distinct_countries
+createTables(engine, inspector, db, distinct_countries)
