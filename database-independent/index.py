@@ -53,9 +53,12 @@ print(df.info(), end="\n\n")
 
 # Converting String to Dates
 try:
-    df['customerOpenDate'] = pd.to_datetime(df['customerOpenDate'], format='%Y%m%d')
-    df['lastConsultedDate'] = pd.to_datetime(df['lastConsultedDate'], format='%Y%m%d')
-    df['dateofBirth'] = pd.to_datetime(df['dateofBirth'], format='%d%m%Y')
+    df['customerOpenDate'] = pd.to_datetime(
+        df['customerOpenDate'], format='%Y%m%d')
+    df['lastConsultedDate'] = pd.to_datetime(
+        df['lastConsultedDate'], format='%Y%m%d')
+    df['dateofBirth'] = pd.to_datetime(
+        df['dateofBirth'], format='%d%m%Y')
 except Exception as e:
     print(e)
 
@@ -63,8 +66,8 @@ except Exception as e:
 print(df.info(), end="\n\n")
 print(df)
 
-
-# lower is applied here and not in `distinct_countries` coz we need to fetch rows also
+# lower is applied here and not in `distinct_countries`
+# coz we need to fetch rows also
 df['country'] = df['country'].str.lower()
 
 # Getting Distinct Countries
@@ -76,7 +79,8 @@ print("\nDistinct Countries:\n", distinct_countries)
 print()
 db = "incubyte"
 try:
-    engine = create_engine("mysql+mysqlconnector://root:password@localhost/" + db)
+    engine = create_engine(
+        "mysql+mysqlconnector://root:password@localhost/" + db)
     engine.connect()
     print("Database Connected")
 except Exception as e:
@@ -99,9 +103,11 @@ for country in distinct_countries:
     try:
         print("Inserting Records in " + country)
 
-        # this will create table if table does not exists, which wil avoid constraints like pk
+        # `to_sql` this will create table if table does not exists,
+        # which will avoid constraints like pk, so using if condition
         if country in existing_tables:
-            df[my_filt].to_sql(name=country, con=engine, if_exists='replace', index=False)
+            df[my_filt].to_sql(name=country, con=engine,
+                               if_exists='replace', index=False)
             print("Inserted")
         else:
             print(country + " table does Not exists")

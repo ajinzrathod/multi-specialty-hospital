@@ -1,3 +1,7 @@
+-- date cannot have length
+-- doctorConsulted, country, etc.. cannot be char, so I have considered it as varchar
+
+
 CREATE PROCEDURE createCountryTable(
 IN CountryName VARCHAR(40)
 )

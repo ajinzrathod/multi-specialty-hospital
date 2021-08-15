@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, BigInteger
+from sqlalchemy import Column, String, Date, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -11,9 +11,9 @@ def createTable(tablename):
         customerName = Column(String(255), nullable=False)
         id = Column(BigInteger, primary_key=True, autoincrement=True)
         customerOpenDate = Column(Date, nullable=False)
-        lastConsultedDate = Column (Date)
-        vaccinationType =Column(String(5))
-        doctorConsulted =Column(String(255))
+        lastConsultedDate = Column(Date)
+        vaccinationType = Column(String(5))
+        doctorConsulted = Column(String(255))
         state = Column(String(5))
         country = Column(String(5))
         postCode = Column(String(5))
@@ -24,7 +24,7 @@ def createTable(tablename):
 
 def createTables(engine, inspector, db, distinct_countries, existing_tables):
     for tbl in distinct_countries:
-        if not tbl in existing_tables:
+        if tbl not in existing_tables:
             print("trying to create " + tbl)
             try:
                 createTable(tbl).__table__.create(bind=engine)
