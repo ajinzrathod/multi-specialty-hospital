@@ -71,13 +71,12 @@ try:
 except Exception as e:
     print(e)
 
-# coz these are not null in database
 
 # TOOK HELP FROM THIS SOURCE:
 # https://stackoverflow.com/a/13413845/11605100
+# customerOpenDate should not be null
+# coz these are not null in database, thus we have to drop those records
 df = df[df['customerOpenDate'].notna()]
-
-# if country is null
 
 # here date is treated as date
 print()

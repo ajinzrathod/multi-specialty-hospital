@@ -13,7 +13,6 @@ def createTable(engine, tablename):
 
 
 def createTables(engine, inspector, db, distinct_countries, existing_tables):
-    print("=============")
     for table in distinct_countries:
         if table in existing_tables:
             # using append can cause primary key error
