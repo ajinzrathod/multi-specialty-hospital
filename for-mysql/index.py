@@ -48,23 +48,42 @@ df['customerID'] = df['customerID'].apply(np.int64)
 # Setting customerID as index for faster operations
 df.set_index('customerID')
 
+# converting all empty string to nan, so that we can handle null country
+# TOOK HELP FROM THIS SOURCE
+# https://stackoverflow.com/a/21942746/11605100
+df = df.replace(r'^\s*$', np.nan, regex=True)
+df = df[df['country'].notna()]
+
 # here date is treated as string
 print(df.info(), end="\n\n")
 
 # Converting String to Dates
 try:
     df['customerOpenDate'] = pd.to_datetime(
-        df['customerOpenDate'], format='%Y%m%d')
+        df['customerOpenDate'], format='%Y%m%d',
+        errors='coerce')
     df['lastConsultedDate'] = pd.to_datetime(
-        df['lastConsultedDate'], format='%Y%m%d')
+        df['lastConsultedDate'], format='%Y%m%d',
+        errors='coerce')
     df['dateofBirth'] = pd.to_datetime(
-        df['dateofBirth'], format='%d%m%Y')
+        df['dateofBirth'], format='%d%m%Y',
+        errors='coerce')
 except Exception as e:
     print(e)
 
+# coz these are not null in database
+
+# TOOK HELP FROM THIS SOURCE:
+# https://stackoverflow.com/a/13413845/11605100
+df = df[df['customerOpenDate'].notna()]
+
+# if country is null
+
 # here date is treated as date
+print()
 print(df.info(), end="\n\n")
 print(df)
+# exit(0)
 
 # lower is applied here and not in `distinct_countries`
 # coz we need to fetch rows also
@@ -108,7 +127,7 @@ for country in distinct_countries:
         if country in existing_tables:
             df[my_filt].to_sql(
                 name=country, con=engine,
-                if_exists='replace', index=False)
+                if_exists='append', index=False)
             print("Inserted")
         else:
             print(country + " table does Not exists")

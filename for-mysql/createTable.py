@@ -13,13 +13,18 @@ def createTable(engine, tablename):
 
 
 def createTables(engine, inspector, db, distinct_countries, existing_tables):
-    for tbl in distinct_countries:
-        if tbl not in existing_tables:
-            print("trying to create " + tbl)
-            try:
-                createTable(engine, tbl)
-                print("Created")
-            except Exception as e:
-                print(e)
-        else:
-            print(tbl + " already exists")
+    print("=============")
+    for table in distinct_countries:
+        if table in existing_tables:
+            # using append can cause primary key error
+            # thus its a good idea to drop tables first
+            print(table + " already exists. Dropping")
+            with engine.connect() as con:
+                con.execute("drop table " + table)
+                print("Dropped")
+        print("trying to create " + table)
+        try:
+            createTable(engine, table)
+            print("Created")
+        except Exception as e:
+            print(e)
